@@ -172,9 +172,6 @@ function ADDON_Utils.Initialize()
     for itemID,_ in pairs(ADDON_C.ALWAYS_ASK_ITEMS) do
         idsByKey[itemID] = true
     end
-    for itemID,_ in pairs(ADDON_C.ALWAYS_NEED_ITEMS) do
-        idsByKey[itemID] = true
-    end
 
     local idsList = {}
     for itemID in pairs(idsByKey) do
