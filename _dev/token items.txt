@@ -1,0 +1,66 @@
+--[[
+-- not used yet
+local TOKEN_ITEMS = {
+    -- Ahn'Qiraj
+    [20926] = true, [20927] = true, [20928] = true,
+    [20929] = true, [20930] = true, [20931] = true,
+    [20932] = true, [20933] = true,
+    -- black temple
+    [31089] = true, [31090] = true, [31091] = true,
+    [31098] = true, [31099] = true, [31100] = true,
+    [31101] = true, [31102] = true, [31103] = true,
+    -- hyjal
+    [31092] = true, [31093] = true, [31094] = true,
+    [31095] = true, [31096] = true, [31097] = true,
+    -- echsenkessel
+    [30239] = true, [30240] = true, [30241] = true,
+    [30242] = true, [30243] = true, [30244] = true,
+    [30245] = true, [30246] = true, [30247] = true,
+    -- gruul
+    [29762] = true, [29763] = true, [29764] = true,
+    [29765] = true, [29766] = true, [29767] = true,
+    -- magtheridon
+    [29753] = true, [29754] = true, [29755] = true,
+    -- karazhan
+    [29756] = true, [29757] = true, [29758] = true,
+    [29759] = true, [29760] = true, [29761] = true,
+    -- sunwell
+    [34848] = true, [34851] = true, [34852] = true,
+    [34853] = true, [34854] = true, [34855] = true,
+    [34856] = true, [34857] = true, [34858] = true,
+    -- das auge
+    [30248] = true, [30249] = true, [30250] = true,
+    [30236] = true, [30237] = true, [30238] = true,
+    -- icecrown
+    [52025] = true, [52026] = true, [52027] = true,
+    [52028] = true, [52029] = true, [52030] = true,
+    -- naxxramas 10
+    [40610] = true, [40611] = true, [40612] = true,
+    [40616] = true, [40617] = true, [40618] = true,
+    [40619] = true, [40620] = true, [40621] = true,
+    [40622] = true, [40623] = true, [40624] = true,
+    -- naxxramas 25
+    [40625] = true, [40626] = true, [40627] = true,
+    [40631] = true, [40632] = true, [40633] = true,
+    [40634] = true, [40635] = true, [40636] = true,
+    [40637] = true, [40638] = true, [40639] = true,
+    -- obsi 10
+    [40613] = true, [40614] = true, [40615] = true,
+    -- obsi 25
+    [40628] = true, [40629] = true, [40630] = true,
+    -- kreuzfahrer
+    [47242] = true,
+    -- ulduar 10
+    [45635] = true, [45636] = true, [45637] = true,
+    [45644] = true, [45645] = true, [45646] = true,
+    [45647] = true, [45648] = true, [45649] = true,
+    [45650] = true, [45651] = true, [45652] = true,
+    [45659] = true, [45660] = true, [45661] = true,
+    -- ulduar 25
+    [45632] = true, [45633] = true, [45634] = true,
+    [45638] = true, [45639] = true, [45640] = true,
+    [45641] = true, [45642] = true, [45643] = true,
+    [45653] = true, [45654] = true, [45655] = true,
+    [45656] = true, [45657] = true, [45658] = true,
+}
+]]--

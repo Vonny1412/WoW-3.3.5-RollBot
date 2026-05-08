@@ -1,0 +1,33 @@
+## Interface: 30300
+## Title: Rollbot
+## Version: 4.0.0
+## Author: Yvonne Pautz
+## Notes: Quality-of-life loot rolling helper
+## Notes-deDE: Komfortabler Helfer für Beutewürfe
+## SavedVariablesPerCharacter: RollbotDB
+
+#@no-lib-strip@
+Libs\LibStub\LibStub.lua
+Libs\CallbackHandler-1.0\CallbackHandler-1.0.lua
+Libs\LibDataBroker-1.1\LibDataBroker-1.1.lua
+Libs\LibDBIcon-1.0\LibDBIcon-1.0.lua
+Libs\AceLocale-3.0\AceLocale-3.0.xml
+Libs\V_Runtime-1.0\V_Runtime-1.0.lua
+Libs\V_Pattern-1.0\V_Pattern-1.0.lua
+Libs\V_ItemInfo-1.0\V_ItemInfo-1.0.lua
+Libs\V_MenuBuilder-1.0\V_MenuBuilder-1.0.lua
+#@end-no-lib-strip@
+
+Localization.xml
+
+Rollbot.lua
+Rollbot_Constants.lua
+Rollbot_Core.lua
+Rollbot_Database.lua
+Rollbot_Dialogs.lua
+Rollbot_History.lua
+Rollbot_Learning.lua
+Rollbot_RollFrame.lua
+Rollbot_RollFrame.xml
+Rollbot_Menu.lua
+Rollbot_Utils.lua

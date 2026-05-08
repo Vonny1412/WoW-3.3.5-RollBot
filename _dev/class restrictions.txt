@@ -1,0 +1,142 @@
+
+Druide
+    Rüstung
+        Leder
+        Stoff
+    Waffen
+        Dolche
+        Einhandstreitkolben
+        Faustwaffen
+        Stäbe
+        Stangenwaffen
+        Zweihandstreitkolben
+
+Hexenmeister
+    Rüstung
+        Stoff
+    Waffen
+        Dolche
+        Einhandschwerter
+        Stäbe
+        Zauberstäbe
+
+Jäger
+    Rüstung
+        Leder
+        Panzer
+        Stoff
+    Waffen
+        Armbrüste
+        Bogen
+        Dolch
+        Einhandäxte
+        Einhandschwerter
+        Faustwaffen
+        Schusswaffen
+        Stäbe
+        Stangenwaffen
+        Zweihandäxte
+        Zweihandschwerter
+        Wurfwaffen
+
+Krieger
+    Rüstung
+        Leder
+        Panzer
+        Plattenpanzer
+        Schild
+        Stoff
+    Waffen
+        Armbrüste
+        Bogen
+        Dolche
+        Einhandäxte
+        Einhandschwerter
+        Einhandstreitkolben
+        Faustwaffen
+        Schusswaffen
+        Stäbe
+        Stangenwaffen
+        Zweihandäxte
+        Zweihandschwerter
+        Zweihandstreitkolben
+        Wurfwaffen
+
+Magier
+    Rüstung
+        Stoff
+    Waffen
+        Dolche
+        Einhandschwerter
+        Stäbe
+        Zauberstäbe
+
+Paladin
+    Rüstung
+        Leder
+        Panzer
+        Plattenpanzer
+        Schild
+        Stoff
+    Waffen
+        Einhandäxte
+        Einhandschwerter
+        Einhandstreitkolben
+        Stangenwaffen
+        Zweihandäxte
+        Zweihandschwerter
+        Zweihandstreitkolben
+
+Priester
+    Rüstung
+        Stoff
+    Waffen
+        Dolche
+        Einhandstreitkolben
+        Stäbe
+        Zauberstäbe
+
+Schamane
+    Rüstung
+        Leder
+        Panzer
+        Schild
+        Stoff
+    Waffen
+        Dolche
+        Einhandäxte
+        Einhandstreitkolben
+        Faustwaffen
+        Stäbe
+        Zweihandäxte
+        Zweihandstreitkolben
+
+Schurke
+    Rüstung
+        Leder
+        Stoff
+    Waffen
+        Armbrüste
+        Bogen
+        Dolche
+        Einhandäxte
+        Einhandschwerter
+        Einhandstreitkolben
+        Faustwaffen
+        Schusswaffen
+        Wurfwaffen
+
+Todesritter
+    Rüstung
+        Leder
+        Panzer
+        Plattenpanzer
+        Stoff
+    Waffen
+        Einhandäxte
+        Einhandschwerter
+        Einhandstreitkolben
+        Stangenwaffen
+        Zweihandäxte
+        Zweihandschwerter
+        Zweihandstreitkolben

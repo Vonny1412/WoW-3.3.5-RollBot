@@ -1,0 +1,80 @@
+
+
+
+            newVersionAvailable = "",
+            newVersionNoticed = 0,
+
+
+
+
+
+
+
+
+
+local function GetCurrentVersion()
+    return GetAddOnMetadata("AgisRollBot", "version")
+end
+
+local function GetNewestVersion()
+    local v = DBGetCFG("newVersionAvailable")
+    if ( v == "" ) then
+        return GetCurrentVersion()
+    end
+    return v
+end
+
+local function SetAvailableVersion(v)
+    if ( v == "" or v == GetCurrentVersion() ) then
+        DBSetCFG("newVersionAvailable", "")
+        DBSetCFG("newVersionNoticed", 0)
+        return
+    end
+    DBSetCFG("newVersionAvailable", v)
+    DBSetCFG("newVersionNoticed", GetTime())
+end
+
+local function NoticeOnAvailableVersion()
+    local available = GetNewestVersion()
+    local current = GetCurrentVersion()
+    if ( available == current ) then
+        return
+    end
+
+    -- only notice once a day
+    local t = DBGetCFG("newVersionNoticed")
+    if ( t > (GetTime()-86400) ) then
+        return
+    end
+
+    DBSetCFG("newVersionNoticed", GetTime())
+    message(format(L["newVersionAvailable"], available, current))
+end
+
+local function SendMyCurrentVersion()
+
+---SendAddonMessage("prefix", "text", "type", "target")
+
+end
+
+local function CompareVersions(v1o, v2o)
+    if ( v1o == v2o or v1o == nil or v2o == nil ) then
+        return nil
+    end
+    v1 = { strsplit(".", v1o) }
+    v2 = { strsplit(".", v2o) }
+    while ( #v1 < #v2 ) do tinsert(v1, "0") end
+    while ( #v2 < #v1 ) do tinsert(v2, "0") end
+    for i=1,#v1 do
+        local v1b = tonumber(v1[i])
+        local v2b = tonumber(v2[i])
+        if ( v1b > v2b ) then return v1o end
+        if ( v2b > v1b ) then return v2o end
+    end
+    return nil
+end
+
+-----------------------------------------------------------------------------------
+
+
+

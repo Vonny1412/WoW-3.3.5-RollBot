@@ -1,0 +1,353 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+    ..\FrameXML\UI.xsd">
+
+    <Button name="Rollbot_RollFrame_ButtonTemplate" motionScriptsWhileDisabled="true" virtual="true">
+        <Size>
+            <AbsDimension x="32" y="32"/>
+        </Size>
+        <Scripts>
+
+            <OnClick function="Rollbot_RollFrame_OnClick"/>
+
+            <OnEnter>
+                GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+                GameTooltip_AddNewbieTip(self, self.tooltipText, 1.0, 1.0, 1.0, self.newbieText);
+                if ( self:IsEnabled() ~= 1 ) then
+                    GameTooltip:AddLine(self.reason, RED_FONT_COLOR.r, RED_FONT_COLOR.g, RED_FONT_COLOR.b, true);
+                    GameTooltip:Show();
+                end
+            </OnEnter>
+
+            <OnLeave>
+                GameTooltip:Hide();
+            </OnLeave>
+
+        </Scripts>
+    </Button>
+
+    <Frame name="Rollbot_RollFrameTemplate" parent="UIParent" toplevel="true" frameStrata="DIALOG" hidden="true" virtual="true">
+        <Size>
+            <AbsDimension x="285" y="84"/>
+        </Size>
+
+        <Layers>
+            <Layer level="ARTWORK">
+
+                <Texture name="$parentSlotTexture" file="Interface\Buttons\UI-EmptySlot">
+                    <Size>
+                        <AbsDimension x="64" y="64"/>
+                    </Size>
+                    <Anchors>
+                        <Anchor point="TOPLEFT">
+                            <Offset>
+                                <AbsDimension x="3" y="-3"/>
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </Texture>
+
+                <Texture name="$parentNameFrame" file="Interface\MerchantFrame\UI-Merchant-LabelSlots">
+                    <Size>
+                        <AbsDimension x="128" y="64"/>
+                    </Size>
+                    <Anchors>
+                        <Anchor point="LEFT" relativeTo="$parentSlotTexture" relativePoint="RIGHT">
+                            <Offset>
+                                <AbsDimension x="-9" y="-10"/>
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </Texture>
+
+                <FontString name="$parentName" inherits="GameFontNormalSmall" text="Item Name" justifyH="LEFT">
+                    <Size>
+                        <AbsDimension x="90" y="30"/>
+                    </Size>
+                    <Anchors>
+                        <Anchor point="LEFT" relativeTo="$parentSlotTexture" relativePoint="RIGHT">
+                            <Offset>
+                                <AbsDimension x="-5" y="5"/>
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </FontString>
+            </Layer>
+
+            <Layer level="OVERLAY">
+                <Texture name="$parentDecoration" file="Interface\DialogFrame\UI-DialogBox-Gold-Dragon" hidden="true">
+                    <Size>
+                        <AbsDimension x="120" y="120"/>
+                    </Size>
+                    <Anchors>
+                        <Anchor point="TOPLEFT">
+                            <Offset>
+                                <AbsDimension x="-30" y="15"/>
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </Texture>
+                <Texture name="$parentCorner" file="Interface\DialogFrame\UI-DialogBox-Corner">
+                    <Size>
+                        <AbsDimension x="32" y="32"/>
+                    </Size>
+                    <Anchors>
+                        <Anchor point="TOPRIGHT">
+                            <Offset>
+                                <AbsDimension x="-6" y="-7"/>
+                            </Offset>
+                        </Anchor>
+                    </Anchors>
+                </Texture>
+            </Layer>
+        </Layers>
+
+        <Frames>
+
+            <Button name="$parentIconFrame" enableMouse="true">
+                <Size>
+                    <AbsDimension x="34" y="34"/>
+                </Size>
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="$parentSlotTexture">
+                        <Offset>
+                            <AbsDimension x="15" y="-15"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+                <Layers>
+                    <Layer level="ARTWORK">
+                        <Texture name="$parentIcon">
+                            <Size>
+                                <AbsDimension x="34" y="34"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="TOPLEFT"/>
+                            </Anchors>
+                        </Texture>
+                    </Layer>
+                    <Layer level="OVERLAY">
+                        <FontString name="$parentCount" inherits="NumberFontNormal" justifyH="RIGHT" hidden="true">
+                            <Anchors>
+                                <Anchor point="BOTTOMRIGHT">
+                                    <Offset>
+                                        <AbsDimension x="-5" y="2"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </FontString>
+                    </Layer>
+                </Layers>
+                <HighlightTexture alphaMode="ADD" file="Interface\Buttons\ButtonHilight-Square"/>
+                <Scripts>
+
+                    <OnLoad>
+                        self.hasItem = 1;
+                    </OnLoad>
+
+                    <OnEnter>
+                        GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+                        GameTooltip:SetHyperlink("item:"..self:GetParent().itemID)
+                        CursorUpdate(self);
+                    </OnEnter>
+
+                    <OnLeave>
+                        GameTooltip:Hide();
+                        ResetCursor();
+                    </OnLeave>
+
+                    <OnUpdate>
+                        if ( GameTooltip:IsOwned(self) ) then
+                            GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+                            GameTooltip:SetHyperlink("item:"..self:GetParent().itemID)
+                        end
+                        CursorOnUpdate(self);
+                    </OnUpdate>
+
+                    <OnClick>
+                        HandleModifiedItemClick(select(2, GetItemInfo(self:GetParent().itemID)))
+                    </OnClick>
+
+                </Scripts>
+            </Button>
+
+            <CheckButton name="$parentDeleteButton" virtual="true" parentKey="deleteButton" id="666">
+                <Size x="24" y="24"/>
+                <DisabledTexture file="Interface\AddOns\RollBot\Textures\UI-Panel\UI-Panel-DeleteButton-Disabled"/>
+                <NormalTexture file="Interface\AddOns\RollBot\Textures\UI-Panel\UI-Panel-DeleteButton-Up"/>
+                <PushedTexture file="Interface\AddOns\RollBot\Textures\UI-Panel\UI-Panel-DeleteButton-Down"/>
+                <HighlightTexture file="Interface\AddOns\RollBot\Textures\UI-Panel\UI-Panel-DeleteButton-Highlight" alphaMode="ADD"/>
+                <Anchors>
+                    <Anchor point="TOPRIGHT" relativeTo="$parentCorner" relativePoint="TOPRIGHT">
+                        <Offset>
+                            <AbsDimension x="0" y="-45"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+                <Scripts>
+
+                    <OnClick function="Rollbot_RollFrame_OnClick"/>
+
+                    <OnEnter>
+                        GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+                        GameTooltip:SetText(CALENDAR_DELETE_EVENT);
+                    </OnEnter>
+
+                    <OnLeave>
+                        GameTooltip:Hide();
+                    </OnLeave>
+
+                </Scripts>
+            </CheckButton>
+
+            <CheckButton name="$parentPassButton" inherits="UIPanelCloseButton" parentKey="passButton" id="0">
+                <Anchors>
+                    <Anchor point="TOPRIGHT" relativeTo="$parentCorner" relativePoint="TOPRIGHT">
+                        <Offset>
+                            <AbsDimension x="5" y="5"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+                <Scripts>
+
+                    <OnClick function="Rollbot_RollFrame_OnClick"/>
+
+                    <OnEnter>
+                        GameTooltip:SetOwner(self, "ANCHOR_RIGHT");
+                        GameTooltip:SetText(PASS);
+                    </OnEnter>
+
+                    <OnLeave>
+                        GameTooltip:Hide();
+                    </OnLeave>
+
+                </Scripts>
+            </CheckButton>
+
+            <CheckButton name="$parentRollButton" inherits="Rollbot_RollFrame_ButtonTemplate" parentKey="needButton" id="1">
+                <Anchors>
+                    <Anchor point="TOPRIGHT">
+                        <Offset>
+                            <AbsDimension x="-48" y="-14"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+                <NormalTexture file="Interface\Buttons\UI-GroupLoot-Dice-Up"/>
+                <HighlightTexture file="Interface\Buttons\UI-GroupLoot-Dice-Highlight" alphaMode="ADD"/>
+                <PushedTexture file="Interface\Buttons\UI-GroupLoot-Dice-Down"/>
+                <Scripts>
+
+                    <OnLoad>
+                        self.tooltipText = NEED;
+                        self.newbieText = NEED_NEWBIE;
+                    </OnLoad>
+
+                </Scripts>
+            </CheckButton>
+
+            <CheckButton name="$parentGreedButton" inherits="Rollbot_RollFrame_ButtonTemplate" parentKey="greedButton" id="2">
+                <Anchors>
+                    <Anchor point="TOP" relativeTo="$parentRollButton" relativePoint="BOTTOM">
+                        <Offset>
+                            <AbsDimension x="-2" y="2"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+                <NormalTexture file="Interface\Buttons\UI-GroupLoot-Coin-Up"/>
+                <HighlightTexture file="Interface\Buttons\UI-GroupLoot-Coin-Highlight" alphaMode="ADD"/>
+                <PushedTexture file="Interface\Buttons\UI-GroupLoot-Coin-Down"/>
+                <Scripts>
+
+                    <OnLoad>
+                        self.tooltipText = GREED;
+                        self.newbieText = GREED_NEWBIE;
+                    </OnLoad>
+
+                </Scripts>
+            </CheckButton>
+
+            <CheckButton name="$parentDisenchantButton" inherits="Rollbot_RollFrame_ButtonTemplate" parentKey="disenchantButton" id="3">
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="$parentGreedButton" relativePoint="RIGHT">
+                        <Offset>
+                            <AbsDimension x="3" y="3"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+                <NormalTexture file="Interface\Buttons\UI-GroupLoot-DE-Up"/>
+                <HighlightTexture file="Interface\Buttons\UI-GroupLoot-DE-Highlight" alphaMode="ADD"/>
+                <PushedTexture file="Interface\Buttons\UI-GroupLoot-DE-Down"/>
+                <Scripts>
+
+                    <OnLoad>
+                        self.tooltipText = ROLL_DISENCHANT;
+                        self.newbieText = ROLL_DISENCHANT_NEWBIE;
+                    </OnLoad>
+
+                </Scripts>
+            </CheckButton>
+
+            <StatusBar name="$parentTimer" drawLayer="BACKGROUND" minValue="0" maxValue="60000" defaultValue="0">
+                <BarTexture name="$parentBar" file="Interface\PaperDollInfoFrame\UI-Character-Skills-Bar"/>
+                <BarColor r="1.0" g="1.0" b="0"/>
+                <Size>
+                    <AbsDimension x="152" y="10"/>
+                </Size>
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="$parentSlotTexture" relativePoint="BOTTOMLEFT">
+                        <Offset>
+                            <AbsDimension x="13" y="10"/>
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+                <Layers>
+                    <Layer level="OVERLAY">
+                        <Texture file="Interface\PaperDollInfoFrame\UI-Character-Skills-BarBorder">
+                            <Size>
+                                <AbsDimension x="156" y="20"/>
+                            </Size>
+                            <Anchors>
+                                <Anchor point="TOP">
+                                    <Offset>
+                                        <AbsDimension x="0" y="5"/>
+                                    </Offset>
+                                </Anchor>
+                            </Anchors>
+                        </Texture>
+                    </Layer>
+                </Layers>
+                <Scripts>
+
+                    <OnUpdate function="Rollbot_RollFrame_OnUpdate"/>
+
+                </Scripts>
+            </StatusBar>
+
+        </Frames>
+
+        <Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+            <BackgroundInsets>
+                <AbsInset left="11" right="12" top="12" bottom="11"/>
+            </BackgroundInsets>
+            <TileSize>
+                <AbsValue val="32"/>
+            </TileSize>
+            <EdgeSize>
+                <AbsValue val="32"/>
+            </EdgeSize>
+        </Backdrop>
+        <Scripts>
+
+            <OnShow function="Rollbot_RollFrame_OnShow"/>
+            <OnHide function="Rollbot_RollFrame_OnHide"/>
+
+        </Scripts>
+    </Frame>
+
+    <Frame name="Rollbot_RollFrame1" inherits="Rollbot_RollFrameTemplate" id="1"/>
+    <Frame name="Rollbot_RollFrame2" inherits="Rollbot_RollFrameTemplate" id="2"/>
+    <Frame name="Rollbot_RollFrame3" inherits="Rollbot_RollFrameTemplate" id="3"/>
+    <Frame name="Rollbot_RollFrame4" inherits="Rollbot_RollFrameTemplate" id="4"/>
+
+</Ui>
