@@ -26,6 +26,10 @@ ADDON_C.ALWAYS_ASK_ITEMS = {
     [43347] = true, -- Satchel of Spoils (Sartharion)
     [43297] = true, -- Damaged Necklace (WotLK Random Drop)
     [45912] = true, -- Book of Glyph Mastery (WotLK Random Drop)
+    [22559] = true, -- Formula: Enchant Weapon - Mongoose
+    [33307] = true, -- Formula: Enchant Weapon - Executioner
+    [49908] = true, -- Primordial Saronite (ICC)
+    [45038] = true, -- Fragment of Val'anyr (Ulduar)
 }
 
 ADDON_C.QUALITY_GREEN_UNCOMMON    = 2 -- wow default
