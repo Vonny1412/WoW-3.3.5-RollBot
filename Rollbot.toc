@@ -1,6 +1,6 @@
 ## Interface: 30300
 ## Title: Rollbot
-## Version: 4.0.0
+## Version: 4.0.1
 ## Author: Yvonne Pautz
 ## Notes: Quality-of-life loot rolling helper
 ## Notes-deDE: Komfortabler Helfer für Beutewürfe
