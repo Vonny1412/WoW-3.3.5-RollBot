@@ -153,6 +153,13 @@ Manually assigned item decisions are handled before Rollbot's normal automatic l
 
 For example, manually assigning a legendary item to Need will cause Rollbot to automatically roll Need on that item, even if the normal safety logic would not do so.
 
+You can assign items manually by using either the item name or the item ID.  
+Using item IDs is recommended.  
+
+If an item name is used and the item is not yet cached by the client, the item may not be recognized correctly.
+
+When using an item ID, Rollbot can automatically request the missing item information from the server if necessary.
+
 ---
 
 ## Fair Use & Important Notes
