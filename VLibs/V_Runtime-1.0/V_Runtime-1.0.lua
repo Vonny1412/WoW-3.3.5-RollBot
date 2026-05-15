@@ -1,4 +1,4 @@
-local V_Runtime = LibStub:NewLibrary("V_Runtime-1.0", 0)
+local V_Runtime = LibStub:NewLibrary("V_Runtime-1.0", 1)
 if ( not V_Runtime ) then return end
 --------------------------------------------------------------------------------
 
@@ -82,6 +82,40 @@ do
         end
         return true
     end
+end
+
+--------------------------------------------------------------------------------
+
+do
+
+    local timerFrame = CreateFrame("Frame")
+    local timers = {}
+
+    local function OnUpdate(self, elapsed)
+        for i = #timers, 1, -1 do
+            local timer = timers[i]
+            timer.delay = timer.delay - elapsed
+            if ( timer.delay <= 0 ) then
+                table.remove(timers, i)
+                timer.func(unpack(timer.args))
+            end
+        end
+        if ( #timers == 0 ) then
+            self:SetScript("OnUpdate", nil)
+        end
+    end
+
+    function V_Runtime.SetTimeout(delay, func, ...)
+        table.insert(timers, {
+            delay = delay,
+            func = func,
+            args = { ... },
+        })
+        if ( not timerFrame:GetScript("OnUpdate") ) then
+            timerFrame:SetScript("OnUpdate", OnUpdate)
+        end
+    end
+
 end
 
 --------------------------------------------------------------------------------

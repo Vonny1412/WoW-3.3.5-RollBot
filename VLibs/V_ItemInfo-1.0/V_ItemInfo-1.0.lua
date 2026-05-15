@@ -165,8 +165,6 @@ do
         notLoggedIn = nil
     end)
 
-
-
     local function OnUpdate(self, elapsed)
         if ( notLoggedIn ) then
             return

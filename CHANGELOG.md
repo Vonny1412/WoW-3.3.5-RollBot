@@ -1,6 +1,15 @@
 
 # Changelog
 
+## 4.0.3
+
+- Fixed an issue in raids where unusable equippable items could still appear as valid Need items.
+- Learnable items such as recipes, mounts, and pets are now treated as BoE items when applicable.
+- BoE items with red tooltip requirements are no longer automatically excluded from Need rolls.
+- Added support for raid and tier token items.
+- Token items are always shown for manual roll selection and are never saved automatically.
+- Needed token items are automatically removed from the saved roll list after being won.
+
 ## 4.0.2
 
 - Need settings now apply consistently to all item types, not just equipment

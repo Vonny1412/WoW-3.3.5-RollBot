@@ -1,36 +1,105 @@
---[[
--- not used yet
-local TOKEN_ITEMS = {
+
+ADDON_C.TOKEN_ITEMS = {
+
     -- Ahn'Qiraj
-    [20926] = true, [20927] = true, [20928] = true,
-    [20929] = true, [20930] = true, [20931] = true,
-    [20932] = true, [20933] = true,
-    -- black temple
-    [31089] = true, [31090] = true, [31091] = true,
-    [31098] = true, [31099] = true, [31100] = true,
-    [31101] = true, [31102] = true, [31103] = true,
-    -- hyjal
-    [31092] = true, [31093] = true, [31094] = true,
-    [31095] = true, [31096] = true, [31097] = true,
-    -- echsenkessel
-    [30239] = true, [30240] = true, [30241] = true,
-    [30242] = true, [30243] = true, [30244] = true,
-    [30245] = true, [30246] = true, [30247] = true,
-    -- gruul
-    [29762] = true, [29763] = true, [29764] = true,
-    [29765] = true, [29766] = true, [29767] = true,
-    -- magtheridon
-    [29753] = true, [29754] = true, [29755] = true,
-    -- karazhan
-    [29756] = true, [29757] = true, [29758] = true,
-    [29759] = true, [29760] = true, [29761] = true,
-    -- sunwell
-    [34848] = true, [34851] = true, [34852] = true,
-    [34853] = true, [34854] = true, [34855] = true,
-    [34856] = true, [34857] = true, [34858] = true,
-    -- das auge
-    [30248] = true, [30249] = true, [30250] = true,
-    [30236] = true, [30237] = true, [30238] = true,
+    [20874] = 2, -- Idol of the Sun
+    [20875] = 2, -- Idol of Night
+    [20876] = 2, -- Idol of Death
+    [20877] = 2, -- Idol of the Sage
+    [20878] = 2, -- Idol of Rebirth
+    [20879] = 2, -- Idol of Life
+    [20881] = 2, -- Idol of Strife
+    [20882] = 2, -- Idol of War
+    [20926] = 1, -- Vek'nilash's Circlet
+    [20927] = 1, -- Ouro's Intact Hide
+    [20928] = 1, -- Qiraji Bindings of Command
+    [20929] = 1, -- Carapace of the Old God
+    [20930] = 1, -- Vek'lor's Diadem
+    [20931] = 1, -- Skin of the Great Sandworm
+    [20932] = 1, -- Qiraji Bindings of Dominance
+    [20933] = 1, -- Husk of the Old God
+
+    -- Black Temple
+    [31089] = 1, -- Chestguard of the Forgotten Conqueror
+    [31090] = 1, -- Chestguard of the Forgotten Vanquisher
+    [31091] = 1, -- Chestguard of the Forgotten Protector
+    [31098] = 1, -- Leggings of the Forgotten Conqueror
+    [31099] = 1, -- Leggings of the Forgotten Vanquisher
+    [31100] = 1, -- Leggings of the Forgotten Protector
+    [31101] = 1, -- Pauldrons of the Forgotten Conqueror
+    [31102] = 1, -- Pauldrons of the Forgotten Vanquisher
+    [31103] = 1, -- Pauldrons of the Forgotten Protector
+
+    -- Hyjal
+    [31092] = 1, -- Gloves of the Forgotten Conqueror
+    [31093] = 1, -- Gloves of the Forgotten Vanquisher
+    [31094] = 1, -- Gloves of the Forgotten Protector
+    [31095] = 1, -- Helm of the Forgotten Protector
+    [31096] = 1, -- Helm of the Forgotten Vanquisher
+    [31097] = 1, -- Helm of the Forgotten Conqueror
+
+    -- Serpentshrine Cavern
+    [30239] = 1, -- Gloves of the Vanquished Champion
+    [30240] = 1, -- Gloves of the Vanquished Defender
+    [30241] = 1, -- Gloves of the Vanquished Hero
+    [30242] = 1, -- Helm of the Vanquished Champion
+    [30243] = 1, -- Helm of the Vanquished Defender
+    [30244] = 1, -- Helm of the Vanquished Hero
+    [30245] = 1, -- Leggings of the Vanquished Champion
+    [30246] = 1, -- Leggings of the Vanquished Defender
+    [30247] = 1, -- Leggings of the Vanquished Hero
+
+    -- Gruul's Lair
+    [29762] = 1, -- Pauldrons of the Fallen Hero
+    [29763] = 1, -- Pauldrons of the Fallen Champion
+    [29764] = 1, -- Pauldrons of the Fallen Defender
+    [29765] = 1, -- Leggings of the Fallen Hero
+    [29766] = 1, -- Leggings of the Fallen Champion
+    [29767] = 1, -- Leggings of the Fallen Defender
+
+    -- Magtheridon's Lair
+    [29753] = 1, -- Chestguard of the Fallen Defender
+    [29754] = 1, -- Chestguard of the Fallen Champion
+    [29755] = 1, -- Chestguard of the Fallen Hero
+
+    -- Karazhan
+    [29756] = 1, -- Gloves of the Fallen Hero
+    [29757] = 1, -- Gloves of the Fallen Champion
+    [29758] = 1, -- Gloves of the Fallen Defender
+    [29759] = 1, -- Helm of the Fallen Hero
+    [29760] = 1, -- Helm of the Fallen Champion
+    [29761] = 1, -- Helm of the Fallen Defender
+
+    -- Sunwell
+    [34848] = 1, -- Bracers of the Forgotten Conqueror
+    [34851] = 1, -- Bracers of the Forgotten Protector
+    [34852] = 1, -- Bracers of the Forgotten Vanquisher
+    [34853] = 1, -- Belt of the Forgotten Conqueror
+    [34854] = 1, -- Belt of the Forgotten Protector
+    [34855] = 1, -- Belt of the Forgotten Vanquisher
+    [34856] = 1, -- Boots of the Forgotten Conqueror
+    [34857] = 1, -- Boots of the Forgotten Protector
+    [34858] = 1, -- Boots of the Forgotten Vanquisher
+
+    -- Tempest Keep
+    [30236] = 1, -- Chestguard of the Vanquished Champion
+    [30237] = 1, -- Chestguard of the Vanquished Defender
+    [30238] = 1, -- Chestguard of the Vanquished Hero
+    [30248] = 1, -- Pauldrons of the Vanquished Champion
+    [30249] = 1, -- Pauldrons of the Vanquished Defender
+    [30250] = 1, -- Pauldrons of the Vanquished Hero
+
+
+
+
+    [] = 1, -- 
+    [] = 1, -- 
+    [] = 1, -- 
+    [] = 1, -- 
+
+
+
+
     -- icecrown
     [52025] = true, [52026] = true, [52027] = true,
     [52028] = true, [52029] = true, [52030] = true,
@@ -62,5 +131,9 @@ local TOKEN_ITEMS = {
     [45641] = true, [45642] = true, [45643] = true,
     [45653] = true, [45654] = true, [45655] = true,
     [45656] = true, [45657] = true, [45658] = true,
+
+
+
+
+
 }
-]]--

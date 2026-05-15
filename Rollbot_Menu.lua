@@ -449,9 +449,11 @@ menu:Register({"behavior"}, function(self)
     self:AddButton(L["behavior_special_items_manual"], { checked = true, disabled = true })
     self:AddButton(L["behavior_legendary_items_manual"], { checked = true, disabled = true })
     self:AddButton(L["behavior_learnable_items_manual"], { checked = true, disabled = true })
+    self:AddButton(L["behavior_token_items_manual"], { checked = true, disabled = true })
     self:AddButton(L["behavior_epic_equip_in_raid_manual"], { checked = true, disabled = true })
     self:AddButton(L["behavior_roll_fallback"], { checked = true, disabled = true })
     self:AddButton(L["behavior_remove_won_relevant_items"], { checked = true, disabled = true })
+    self:AddButton(L["behavior_learnable_boe"], { checked = true, disabled = true })
 end)
 
 -----------------------------------------------------------------------------------
@@ -489,7 +491,7 @@ end
 
 function ADDON_Menu.Initialize()
     menu:Initialize()
-    minimapIcon:Register("RollbotIcon", LDB, RollbotDB.settings.minimap)
+    minimapIcon:Register("RollbotIcon", LDB, RollbotDB.settings.minimap) -- todo: unsafe use of RollbotDB, add ADDON_DB.... function instead
     minimapIcon.objects["RollbotIcon"]:SetFrameStrata("LOW")
     ADDON_Menu.SetState(ADDON_DB.GetState())
 end

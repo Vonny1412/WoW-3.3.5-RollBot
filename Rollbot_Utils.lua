@@ -42,6 +42,10 @@ function ADDON_Utils.GetItemLinkInfo(itemLink)
     return V_ItemInfo.GetItemLinkInfo(itemLink)
 end
 
+function ADDON_Utils.ItemIsToken(itemID)
+    return ADDON_C.TOKEN_ITEMS[itemID]
+end
+
 function ADDON_Utils.AlwaysAskItem(itemID)
     if ( ADDON_C.ALWAYS_ASK_ITEMS[itemID] ~= nil ) then
         return true

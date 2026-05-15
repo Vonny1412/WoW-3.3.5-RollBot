@@ -90,7 +90,8 @@ local function OnItemWon(itemID)
     --local alwaysAsk = ADDON_Utils.AlwaysAskItem(itemID)
     local isEquip = ADDON_Utils.IsEquipableItem(itemID)
     local isLearnable = ADDON_Utils.IsLearnableItem(itemID)
-    if ( isEquip or isLearnable ) then
+    local itemIsToken = ADDON_Utils.ItemIsToken(itemID)
+    if ( isEquip or isLearnable or itemIsToken ) then
         ADDON_Core.RemoveItem(itemID, ADDON_C.REASON_ITEM_WON)
     end
 end
@@ -223,10 +224,11 @@ local function OnStartLootRoll(rollID)
     local bindOnPickUp, canNeed, canGreed, canDisenchant, reasonNeed, reasonGreed, reasonDisenchant = select(5, GetLootRollItemInfo(rollID))
 
     local itemIsEquip       = ADDON_Utils.IsEquipableItem(itemID)
-    local itemIsBoE         = itemIsEquip and not bindOnPickUp
     local itemExpansion     = ADDON_Utils.GetItemExpansion(itemID)
     local itemAlwaysAsk     = ADDON_Utils.AlwaysAskItem(itemID)
     local itemIsLearnable   = ADDON_Utils.IsLearnableItem(itemID)
+    local itemIsBoE         = ( itemIsEquip or itemIsLearnable ) and not bindOnPickUp
+    local itemIsToken       = ADDON_Utils.ItemIsToken(itemID)
 
     local itemRedReason     = ADDON_Utils.GetItemUnusableReason(itemID)
     local notWantNeedReason = ADDON_C.REASON_NO_INTEREST
@@ -274,12 +276,26 @@ local function OnStartLootRoll(rollID)
         return DoRoll(rollID, ADDON_C.ROLLS.IGNORE, ADDON_C.REASON_SPECIAL_ITEM)
     end
 
+    if ( canNeed and itemIsToken ) then
+        return DoRoll(rollID, ADDON_C.ROLLS.IGNORE, ADDON_C.REASON_ITEM_IS_TOKEN)
+    end
+
     if ( itemRarity == ADDON_C.QUALITY_ORANGE_LEGENDARY ) then
         return DoRoll(rollID, ADDON_C.ROLLS.IGNORE, ADDON_C.REASON_LEGENDARY_ITEM)
     end
 
     if ( wantBoE ) then
         return DoRoll(rollID, ADDON_C.ROLLS.NEED, ADDON_C.REASON_ITEM_IS_BOE)
+    end
+
+    if ( canNeed and itemRedReason ) then
+        if ( itemRedReason == ADDON_C.REASON_SKILL_TOO_LOW ) then
+            return DoRoll(rollID, ADDON_C.ROLLS.IGNORE, ADDON_C.REASON_SKILL_TOO_LOW)
+        end
+        if ( not itemIsBoE ) then
+            canNeed = false
+            reasonNeed = itemRedReason
+        end
     end
 
     -- inside raid -> special behavior
@@ -308,18 +324,6 @@ local function OnStartLootRoll(rollID)
     -- wantNeed == true
     --
 
-    if ( canNeed and itemRedReason ) then
-        if ( itemRedReason == ADDON_C.REASON_SKILL_TOO_LOW ) then
-            -- this should be unneccessary, it should always be a learnable item.. but just in case
-            if ( itemIsLearnable ) then
-                return DoRoll(rollID, ADDON_C.ROLLS.IGNORE, ADDON_C.REASON_LEARNABLE_ITEM)
-            else
-                return DoRoll(rollID, ADDON_C.ROLLS.IGNORE, ADDON_C.REASON_SKILL_TOO_LOW)
-            end
-        end
-        canNeed = false
-        reasonNeed = itemRedReason
-    end
     if ( canNeed and itemIsLearnable ) then
         return DoRoll(rollID, ADDON_C.ROLLS.IGNORE, ADDON_C.REASON_LEARNABLE_ITEM)
     end

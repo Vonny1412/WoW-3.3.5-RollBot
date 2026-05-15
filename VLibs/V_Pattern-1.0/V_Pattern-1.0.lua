@@ -98,10 +98,6 @@ do
             return ret
         end
 
-
-
-
-
         -- fallback for simple groups
         for k,v in pairs(mTypes) do
             pattern = pattern:gsub("%%"..k, "%("..v.luaPattern:gsub("%%", "%%%%").."%)")
