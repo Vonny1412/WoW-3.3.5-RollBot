@@ -18,6 +18,19 @@ end
 
 -----------------------------------------------------------------------------------
 
+StaticPopupDialogs["ROLLBOT_DIALOG_SET_ITEM_WARNING"] = {
+    text = L["dialog_manual_save_warning"],
+    button1 = L["common_ok"],
+    OnAccept = function(self)
+        _CallCB(self.data.callback)
+    end,
+    showAlert = 1,
+    timeout = 0,
+    whileDead = true,
+    hideOnEscape = false,
+    preferredIndex = 3,
+}
+
 StaticPopupDialogs["ROLLBOT_DIALOG_SET_ITEM"] = {
     text = L["dialog_enter_item_id_or_name"],
     hasEditBox = true,
@@ -39,9 +52,8 @@ StaticPopupDialogs["ROLLBOT_DIALOG_SET_ITEM"] = {
         local itemID = tonumber(enteredText)
         if ( enteredText == tostring(itemID) ) then
             -- is item id
-            ADDON_Utils.RequestItemInfo(itemID, function(itemID, success)
-                if ( success == true ) then
-                    local itemName, itemLink, itemRarity = GetItemInfo(itemID)
+            ADDON_Utils.RequestItemInfo(itemID, function(itemID, itemName, itemLink, itemRarity, ...)
+                if ( itemName ) then
                     if ( itemRarity < ADDON_C.QUALITY_GREEN_UNCOMMON ) then
                         ADDON_Utils.message(L["itemQualityTooLow"], itemLink)
                         _CallCB(self.data.callback, "", nil)

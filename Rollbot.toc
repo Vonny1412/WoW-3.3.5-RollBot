@@ -1,6 +1,6 @@
 ## Interface: 30300
 ## Title: Rollbot
-## Version: 4.0.1
+## Version: 4.0.2
 ## Author: Yvonne Pautz
 ## Notes: Quality-of-life loot rolling helper
 ## Notes-deDE: Komfortabler Helfer für Beutewürfe
@@ -12,10 +12,11 @@ Libs\CallbackHandler-1.0\CallbackHandler-1.0.lua
 Libs\LibDataBroker-1.1\LibDataBroker-1.1.lua
 Libs\LibDBIcon-1.0\LibDBIcon-1.0.lua
 Libs\AceLocale-3.0\AceLocale-3.0.xml
-Libs\V_Runtime-1.0\V_Runtime-1.0.lua
-Libs\V_Pattern-1.0\V_Pattern-1.0.lua
-Libs\V_ItemInfo-1.0\V_ItemInfo-1.0.lua
-Libs\V_MenuBuilder-1.0\V_MenuBuilder-1.0.lua
+Libs\V_Runtime-1.0\V_Runtime-1.0.xml
+Libs\V_Pattern-1.0\V_Pattern-1.0.xml
+Libs\V_ItemInfo-1.0\V_ItemInfo-1.0.xml
+Libs\V_MenuBuilder-1.0\V_MenuBuilder-1.0.xml
+Libs\V_Table-1.0\V_Table-1.0.xml
 #@end-no-lib-strip@
 
 Localization.xml

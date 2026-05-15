@@ -125,6 +125,20 @@ local function _SetItem(btn)
     loop()
 end
 
+local function _SetItemWarn(btn)
+    local warned = not not ADDON_DB.GetConfig("manualSetItemWarned")
+    if ( not warned ) then
+        StaticPopup_Show("ROLLBOT_DIALOG_SET_ITEM_WARNING", nil, nil, {
+            callback = function()
+                ADDON_DB.SetConfig("manualSetItemWarned", true)
+                _SetItem(btn)
+            end,
+        })
+    else
+        _SetItem(btn)
+    end
+end
+
 local function _RemoveItem(btn, arg)
     ADDON_Core.RemoveItem(arg.itemID, ADDON_C.REASON_REMOVED_BY_USER)
     ADDON_Menu.Show({"lastItems"})
@@ -154,8 +168,8 @@ end
 
 local function _ShowRndTestFrame(btn, arg)
     -- 3895 = TEST Legendary
-    ADDON_Utils.RequestItemInfo(3895, function(itemID, success)
-        if ( success ) then
+    ADDON_Utils.RequestItemInfo(3895, function(itemID, itemName, ...)
+        if ( itemName ) then
             ADDON_Core.ShowRndFrame(itemID)
             ADDON_Menu.Show({"settings","showRndFrame"})
         else
@@ -192,7 +206,7 @@ menu:Register({}, function(self)
     })
     self:AddSpacer()
     self:AddButton(L["menu_set_item"], {
-        func = _SetItem,
+        func = _SetItemWarn,
     })
 end)
 
@@ -272,7 +286,7 @@ menu:Register({"settings"}, function(self)
         func = _SetConfigChecked,
         arg = { cfgkey = "rollGreed", reopen = { "settings", "rollGreed" } },
     })
-    self:AddButton(L["menu_roll_disenchant"], {
+    self:AddButton(L["menu_roll_de"], {
         path = { "settings", "rollDisenchant" },
         arrow = rollDisenchant,
         checked = rollDisenchant,
@@ -352,6 +366,12 @@ menu:Register({"settings","rollGreed"}, function(self)
 end)
 
 menu:Register({"settings","rollDisenchant"}, function(self)
+    self:AddButton(L["menu_roll_de_boe"], {
+        checked = not not ADDON_DB.GetConfig("rollDisenchant_BoE"),
+        func = _SetConfigChecked,
+        arg = { cfgkey = "rollDisenchant_BoE", reopen = { "settings", "rollDisenchant" } },
+    })
+    self:AddSpacer("")
     self:AddSpacer("|cFFFFCC00"..L["menu_expansion"].."|r")
     for exp=0,ADDON_C.EXPANSIONS,1 do
         local cfgkey = "rollDisenchant_exp"..exp

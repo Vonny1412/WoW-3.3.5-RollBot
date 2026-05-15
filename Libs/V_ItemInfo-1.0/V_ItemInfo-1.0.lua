@@ -127,9 +127,27 @@ end
 
 do
 
+    local function DoCallBack(cb, ...)
+        if ( cb ~= nil ) then
+            V_Runtime.SafeCall(cb, ...)
+        end
+    end
+
+    local function TryGetItemInfo(itemID, callback, callbackOnFail)
+        local itemInfo = { GetItemInfo(itemID) }
+        if ( #itemInfo > 0 ) then
+            DoCallBack(callback, unpack(itemInfo))
+            return true
+        end
+        if ( callbackOnFail == true ) then
+            DoCallBack(callback)
+        end
+        return false
+    end
+
     local REQUEST_CHECK_INTERVAL = 0.2
-    local REQUEST_TIMEOUT = 3.0
-    local MAX_PENDING_REQUESTS = 5
+    local REQUEST_TIMEOUT = 0.5
+    local MAX_PENDING_REQUESTS = 10
 
     local runner = CreateFrame("Frame")
     local tooltip = CreateFrame("GameTooltip", "V_ItemInfo_RequestItemInfo_Tooltip", UIParent, "GameTooltipTemplate")
@@ -147,23 +165,7 @@ do
         notLoggedIn = nil
     end)
 
-    local function DoCallBack(cb, success, itemID)
-        if ( cb ~= nil ) then
-            V_Runtime.SafeCall(cb, success, itemID)
-        end
-    end
 
-    local function TryGetItemInfo(itemID, callback, callbackOnFail)
-        local itemName = GetItemInfo(itemID)
-        if ( itemName ~= nil ) then
-            DoCallBack(callback, itemID, true)
-            return true
-        end
-        if ( callbackOnFail == true ) then
-            DoCallBack(callback, itemID, false)
-        end
-        return false
-    end
 
     local function OnUpdate(self, elapsed)
         if ( notLoggedIn ) then
@@ -173,7 +175,6 @@ do
         if ( #pendingRequests < MAX_PENDING_REQUESTS ) then
             while ( #pendingQueue > 0 and #pendingRequests < MAX_PENDING_REQUESTS ) do
                 local request = tremove(pendingQueue, 1)
-                DoCallBack(request.callback, request.itemID, nil)
                 tooltip:SetHyperlink("item:" .. request.itemID .. ":0:0:0:0:0:0:0")
                 tinsert(pendingRequests, request)
             end
@@ -216,7 +217,7 @@ do
             return false, "Item ID is not a number"
         end
 
-        if ( TryGetItemInfo(itemID, callback ) ) then
+        if ( TryGetItemInfo(itemID, callback, false) ) then
             return true
         end
 
@@ -246,27 +247,24 @@ do
             return
         end
         local check = function()
-            for i=1,count do
-                if ( results[i] == nil ) then
-                    return
-                end
+            count = count - 1
+            if ( count == 0 ) then
+                V_Runtime.SafeCall(callback, results)
             end
-            V_Runtime.SafeCall(callback, results)
         end
-        for i=1,count do
-            local index = i
-            local itemID = t[i]
-            local requested = V_ItemInfo.RequestItemInfo(itemID, function(itemID, success)
-                if ( success ~= nil ) then
-                    results[index] = { itemID, success }
-                    check()
+        for _,id in pairs(t) do
+            local itemID = id
+            local requested = V_ItemInfo.RequestItemInfo(itemID, function(itemName, ...)
+                if ( itemName ~= nil ) then
+                    results[itemID] = { itemName, ... }
                 end
+                check()
             end)
             if ( requested ~= true ) then
-                results[index] = { itemID, false }
                 check()
             end
         end
+
     end
 
 end

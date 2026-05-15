@@ -3,6 +3,7 @@ local ADDON_NAME, ADDON = ...
 local ADDON_C = ADDON.Constants
 local ADDON_DB = ADDON.Database
 local ADDON_Utils = ADDON.Utils
+local V_Table = LibStub("V_Table-1.0")
 
 -----------------------------------------------------------------------------------
 
@@ -21,19 +22,22 @@ local DATABASE_DEFAULT = {
             rollNeed_qual3 = false,
             rollNeed_qual4 = true,
             rollNeedBoE = true,
-            rollNeedBoE_exp0 = false,
-            rollNeedBoE_exp1 = false,
+            rollNeedBoE_exp0 = true,
+            rollNeedBoE_exp1 = true,
             rollNeedBoE_exp2 = true,
-            rollNeedBoE_qual3 = false,
+            rollNeedBoE_qual2 = false,
+            rollNeedBoE_qual3 = true,
             rollNeedBoE_qual4 = true,
             rollGreed = true,
             rollGreedOnlySellable = true,
             rollDisenchant = true,
+            rollDisenchant_BoE = true,
             rollDisenchant_exp0 = false,
             rollDisenchant_exp1 = false,
             rollDisenchant_exp2 = true,
             showRndFrame = true,
             filterMessages = true,
+            manualSetItemWarned = false,
         },
         rndEyes = {
             [ADDON_C.ROLLS.NEED] = 100,
@@ -73,9 +77,9 @@ local DATABASE_DEFAULT = {
 
 function ADDON_DB.Initialize()
     if ( RollbotDB == nil ) then
-        RollbotDB = ADDON_Utils.CopyTable(DATABASE_DEFAULT)
+        RollbotDB = V_Table.CopyTable(DATABASE_DEFAULT)
     else
-        RollbotDB = ADDON_Utils.ApplyDefaults(RollbotDB, DATABASE_DEFAULT)
+        RollbotDB = V_Table.ApplyDefaults(RollbotDB, DATABASE_DEFAULT)
     end
     --if ( ADDON_DB.UpdateToVersion(12345) ) then
     --end

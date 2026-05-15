@@ -23,7 +23,8 @@ L["menu_roll_greed_only_sellable"] = "Only sellable"
 L["menu_expansion"] = "Expansion:"
 L["menu_quality"] = "Quality:"
 L["menu_roll_need_boe"] = "Need (on BoE)"
-L["menu_roll_disenchant"] = "Disenchant"
+L["menu_roll_de"] = "Disenchant"
+L["menu_roll_de_boe"] = "Disenchant BoE"
 L["menu_show_rnd_frame"] = "Show /rnd frame"
 L["menu_show_rnd_test_frame"] = "Tryout"
 L["menu_filter_messages"] = "Filter messages"
@@ -40,6 +41,7 @@ L["behavior_remove_won_relevant_items"] = "Won relevant need-items are removed f
 
 L["dialog_enter_item_id_or_name"] = "Enter ID or name"
 L["dialog_clear_all_rolls_question"] = "Really?"
+L["dialog_manual_save_warning"] = "Manual item rules have priority over Rollbot's default behavior. Use them carefully."
 
 L["common_yes"] = "Yes"
 L["common_no"] = "No"

@@ -8,7 +8,7 @@ if ( not L ) then return end
 -- ö \195\182
 -- ü \195\188
 -- Ä \195\132
--- ö \195\182
+-- Ö \195\150
 -- Ü \195\156
 -- ß \195\159
 
@@ -31,7 +31,8 @@ L["menu_roll_greed_only_sellable"] = "Nur Verkaufbares"
 L["menu_expansion"] = "Erweiterung:"
 L["menu_quality"] = "Qualit\195\164t:"
 L["menu_roll_need_boe"] = "Bedarf (auf BoE)"
-L["menu_roll_disenchant"] = "Entzaubern"
+L["menu_roll_de"] = "Entzaubern"
+L["menu_roll_de_boe"] = "Entzaubere BoE"
 L["menu_show_rnd_frame"] = "Zeige /rnd Fenster"
 L["menu_show_rnd_test_frame"] = "Ausprobieren"
 L["menu_filter_messages"] = "Meldungen filtern"
@@ -48,6 +49,7 @@ L["behavior_remove_won_relevant_items"] = "Gewonnene relevante Bedarfs-Items wer
 
 L["dialog_enter_item_id_or_name"] = "ID oder Name eingeben"
 L["dialog_clear_all_rolls_question"] = "Wirklich?"
+L["dialog_manual_save_warning"] = "Manuelle Item-Regeln haben Vorrang vor Rollbots Standardverhalten. Nutze sie mit Bedacht."
 
 L["common_yes"] = "Ja"
 L["common_no"] = "Nein"

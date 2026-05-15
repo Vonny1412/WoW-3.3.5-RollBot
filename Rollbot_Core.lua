@@ -87,10 +87,10 @@ local function OnItemWon(itemID)
     if ( ADDON_DB.GetItemRoll(itemID) ~= ADDON_C.ROLLS.NEED ) then
         return
     end
-    local alwaysAsk = ADDON_Utils.AlwaysAskItem(itemID)
+    --local alwaysAsk = ADDON_Utils.AlwaysAskItem(itemID)
     local isEquip = ADDON_Utils.IsEquipableItem(itemID)
     local isLearnable = ADDON_Utils.IsLearnableItem(itemID)
-    if ( alwaysAsk or isEquip or isLearnable ) then
+    if ( isEquip or isLearnable ) then
         ADDON_Core.RemoveItem(itemID, ADDON_C.REASON_ITEM_WON)
     end
 end
@@ -144,39 +144,39 @@ end
 
 local lootMessageHandlers = {}
 
-lootMessageHandlers.LOOT_ROLL_DISENCHANT_SELF = function(itemID, msgInfo)
+lootMessageHandlers.LOOT_ROLL_DISENCHANT_SELF = function(itemID)
     OnItemRolled(itemID, ADDON_C.ROLLS.DISENCHANT)
 end
 
-lootMessageHandlers.LOOT_ROLL_GREED_SELF = function(itemID, msgInfo)
+lootMessageHandlers.LOOT_ROLL_GREED_SELF = function(itemID)
     OnItemRolled(itemID, ADDON_C.ROLLS.GREED)
 end
 
-lootMessageHandlers.LOOT_ROLL_NEED_SELF = function(itemID, msgInfo)
+lootMessageHandlers.LOOT_ROLL_NEED_SELF = function(itemID)
     OnItemRolled(itemID, ADDON_C.ROLLS.NEED)
 end
 
-lootMessageHandlers.LOOT_ROLL_PASSED_SELF = function(itemID, msgInfo)
+lootMessageHandlers.LOOT_ROLL_PASSED_SELF = function(itemID)
     OnItemRolled(itemID, ADDON_C.ROLLS.PASS)
 end
 
-lootMessageHandlers.LOOT_ROLL_YOU_WON = function(itemID, msgInfo)
+lootMessageHandlers.LOOT_ROLL_YOU_WON = function(itemID)
     OnItemWon(itemID)
 end
 
-lootMessageHandlers.LOOT_ITEM = function(itemID, msgInfo)
+lootMessageHandlers.LOOT_ITEM = function(itemID)
     -- not used
 end
 
-lootMessageHandlers.LOOT_ITEM_MULTIPLE = function(itemID, msgInfo)
+lootMessageHandlers.LOOT_ITEM_MULTIPLE = function(itemID)
     -- not used
 end
 
-lootMessageHandlers.LOOT_ITEM_SELF = function(itemID, msgInfo)
+lootMessageHandlers.LOOT_ITEM_SELF = function(itemID)
     -- not used
 end
 
-lootMessageHandlers.LOOT_ITEM_SELF_MULTIPLE = function(itemID, msgInfo)
+lootMessageHandlers.LOOT_ITEM_SELF_MULTIPLE = function(itemID)
     -- not used
 end
 
@@ -227,7 +227,10 @@ local function OnStartLootRoll(rollID)
     local itemExpansion     = ADDON_Utils.GetItemExpansion(itemID)
     local itemAlwaysAsk     = ADDON_Utils.AlwaysAskItem(itemID)
     local itemIsLearnable   = ADDON_Utils.IsLearnableItem(itemID)
+
     local itemRedReason     = ADDON_Utils.GetItemUnusableReason(itemID)
+    local notWantNeedReason = ADDON_C.REASON_NO_INTEREST
+
     local insideRaid        = GetNumRaidMembers() > 0
 
     local rollNeed              = ADDON_DB.GetConfig("rollNeed")
@@ -235,6 +238,7 @@ local function OnStartLootRoll(rollID)
     local rollGreed             = ADDON_DB.GetConfig("rollGreed")
     local rollGreedOnlySellable = ADDON_DB.GetConfig("rollGreedOnlySellable")
     local rollDisenchant        = ADDON_DB.GetConfig("rollDisenchant")
+    local rollDisenchantBoE     = ADDON_DB.GetConfig("rollDisenchant_BoE")
 
     local needQuality       = ADDON_DB.GetConfig("rollNeed_qual"..itemRarity)
     local needExpansion     = ADDON_DB.GetConfig("rollNeed_exp"..itemExpansion)
@@ -242,10 +246,10 @@ local function OnStartLootRoll(rollID)
     local needBoEExpansion  = ADDON_DB.GetConfig("rollNeedBoE_exp"..itemExpansion)
     local disExpansion      = ADDON_DB.GetConfig("rollDisenchant_exp"..itemExpansion)
 
-    local wantNeed          = rollNeed and ( not itemIsEquip or ( needExpansion and needQuality ) )
+    local wantNeed          = rollNeed and needExpansion and needQuality
     local wantGreed         = rollGreed and ( itemSellPrice > 0 or not rollGreedOnlySellable )
-    local wantDisenchant    = rollDisenchant and disExpansion
-    local wantBoE           = rollNeedBoE and ( itemIsBoE and needBoEQuality and needBoEExpansion )
+    local wantDisenchant    = rollDisenchant and disExpansion and ( rollDisenchantBoE or not itemIsBoE )
+    local wantBoE           = rollNeedBoE and itemIsBoE and needBoEQuality and needBoEExpansion
 
     -- is in auto list
     local autoRoll = ADDON_DB.GetItemRoll(itemID)
@@ -253,94 +257,81 @@ local function OnStartLootRoll(rollID)
 
         if ( ADDON_Menu.IsLearning() ) then
             if ( ADDON_Learning.GetItem(itemID) == nil ) then
+                -- let user decide and save again
                 return
             end
         end
 
-        -- check if activated
         if ( autoRoll == ADDON_C.ROLLS.NEED       and rollNeed )
         or ( autoRoll == ADDON_C.ROLLS.GREED      and rollGreed )
         or ( autoRoll == ADDON_C.ROLLS.DISENCHANT and rollDisenchant )
         or ( autoRoll == ADDON_C.ROLLS.PASS ) then
-
             return DoRoll(rollID, autoRoll, ADDON_C.REASON_IN_AUTO_LIST)
         end
     end
 
-    -- handle special items
     if ( itemAlwaysAsk ) then
-        -- always let user decide, dont save roll
         return DoRoll(rollID, ADDON_C.ROLLS.IGNORE, ADDON_C.REASON_SPECIAL_ITEM)
     end
 
-    -- orange legendary items
     if ( itemRarity == ADDON_C.QUALITY_ORANGE_LEGENDARY ) then
-        -- never auto roll or auto save rolls!
         return DoRoll(rollID, ADDON_C.ROLLS.IGNORE, ADDON_C.REASON_LEGENDARY_ITEM)
     end
 
-    -- handle bind-on-equip items
     if ( wantBoE ) then
-        -- always try roll need... canNeed is beeing checked by DoRoll()
         return DoRoll(rollID, ADDON_C.ROLLS.NEED, ADDON_C.REASON_ITEM_IS_BOE)
     end
 
-    -- we dont want to roll need
-    if ( not wantNeed ) then
-
-        -- maybe we can disenchant it
-        if ( canDisenchant and wantDisenchant ) then
-            return DoRoll(rollID, ADDON_C.ROLLS.DISENCHANT, ADDON_C.REASON_NO_INTEREST)
+    -- inside raid -> special behavior
+    if ( insideRaid and itemIsEquip and ( itemRarity >= ADDON_C.QUALITY_PURPLE_EPIC ) ) then
+        if ( wantNeed ) then
+            if ( canNeed ) then
+                return DoRoll(rollID, ADDON_C.ROLLS.IGNORE, ADDON_C.REASON_IN_RAID)
+            end
+            wantNeed = false
+            wantGreed = true
+            notWantNeedReason = ADDON_C.REASON_IN_RAID
         end
-
-        -- well we could still sell it
-        if ( canGreed and wantGreed ) then
-            return DoRoll(rollID, ADDON_C.ROLLS.GREED, ADDON_C.REASON_NO_INTEREST)
-        end
-
-        -- otherwise its no use for us... just pass on it
-        return DoRoll(rollID, ADDON_C.ROLLS.PASS, ADDON_C.REASON_NO_INTEREST)
     end
 
-    -- some equippable items can be rolled need but char is not qualified (yet)
+    if ( not wantNeed ) then
+        if ( wantDisenchant ) then
+            return DoRoll(rollID, ADDON_C.ROLLS.DISENCHANT, notWantNeedReason)
+        end
+        if ( wantGreed ) then
+            return DoRoll(rollID, ADDON_C.ROLLS.GREED, notWantNeedReason)
+        end
+        return DoRoll(rollID, ADDON_C.ROLLS.PASS, notWantNeedReason)
+    end
+
+    --
+    -- wantNeed == true
+    --
+
     if ( canNeed and itemRedReason ) then
         if ( itemRedReason == ADDON_C.REASON_SKILL_TOO_LOW ) then
-            -- character could learn the recipe but required skill is too low
-            -- let user decide, dont save
-            return DoRoll(rollID, ADDON_C.ROLLS.IGNORE, ADDON_C.REASON_SKILL_TOO_LOW)
+            -- this should be unneccessary, it should always be a learnable item.. but just in case
+            if ( itemIsLearnable ) then
+                return DoRoll(rollID, ADDON_C.ROLLS.IGNORE, ADDON_C.REASON_LEARNABLE_ITEM)
+            else
+                return DoRoll(rollID, ADDON_C.ROLLS.IGNORE, ADDON_C.REASON_SKILL_TOO_LOW)
+            end
         end
         canNeed = false
         reasonNeed = itemRedReason
     end
-
-    -- handle learnable items (recipe/mount/pet)
     if ( canNeed and itemIsLearnable ) then
-
-        -- we know we are qualified -> we need it! BUT: let user decide and dont save!
         return DoRoll(rollID, ADDON_C.ROLLS.IGNORE, ADDON_C.REASON_LEARNABLE_ITEM)
     end
 
-    -- we cant roll need
     if ( not canNeed ) then
-
-        -- maybe we can de it
-        if ( canDisenchant and wantDisenchant ) then
+        if ( wantDisenchant ) then
             return DoRoll(rollID, ADDON_C.ROLLS.DISENCHANT, reasonNeed)
         end
-
-        -- well we could still sell it
-        if ( canGreed and wantGreed ) then
+        if ( wantGreed ) then
             return DoRoll(rollID, ADDON_C.ROLLS.GREED, reasonNeed)
         end
-
-        -- otherwise its no use for us... just pass on it
         return DoRoll(rollID, ADDON_C.ROLLS.PASS, reasonNeed)
-    end
-
-    -- need enabled and qualified -> BUT item is equipp
-    if ( insideRaid and itemIsEquip and ( itemRarity >= ADDON_C.QUALITY_PURPLE_EPIC ) ) then
-        -- user decides, dont save
-        return DoRoll(rollID, ADDON_C.ROLLS.IGNORE, ADDON_C.REASON_IN_RAID)
     end
 
     -- need enabled, need possible, item might be useful
@@ -384,10 +375,10 @@ local function OnChatMsgLoot(msg)
         return
     end
 
-    local itemID, rollKey, msgInfo = ADDON_Utils.GetRollMessageItemID(msg, MESSAGES_ORDERED_KEYS)
+    local itemID, rollKey = ADDON_Utils.GetRollMessageItemID(msg, MESSAGES_ORDERED_KEYS)
     if ( itemID ) then
         if ( lootMessageHandlers[rollKey] ) then
-            lootMessageHandlers[rollKey](itemID, msgInfo)
+            lootMessageHandlers[rollKey](itemID)
         end
     end
 end

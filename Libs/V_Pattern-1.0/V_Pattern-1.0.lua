@@ -1,4 +1,4 @@
-local V_Pattern = LibStub:NewLibrary("V_Pattern-1.0", 0)
+local V_Pattern = LibStub:NewLibrary("V_Pattern-1.0", 1)
 if ( not V_Pattern ) then return end
 --------------------------------------------------------------------------------
 
@@ -65,30 +65,42 @@ do
         -- parse ordered groups
 
         local order = {}
+        local orderMax = 0
         for k,v in pairs(mTypes) do
             -- note: pattern has already been escaped
             -- so "%1$s" is now "%%1%$s"
             for m in pattern:gmatch("%%[0-9]+%%%$"..k.."") do
                 local mOrder, mType = m:match("%%([0-9]+)%%%$("..k..")")
-                table.insert(order, tonumber(mOrder))
+                mOrder = tonumber(mOrder)
+                table.insert(order, mOrder)
+                if ( mOrder > orderMax ) then
+                    orderMax = mOrder
+                end
                 pattern = pattern:gsub(escape(m), "("..v.luaPattern:gsub("%%", "%%%%")..")")
             end
         end
 
         if ( #order ~= 0 ) then
-            function ret:GetMatch(subject)
+            function ret:GetMatch(subject, results)
                 if ( type(subject) ~= "string" ) then
                     return nil
                 end
-                local matches = { subject:match("^"..pattern.."$") }
-                local ordered = {}
-                for i=1,#order do
-                    ordered[i] = matches[order[i]]
+                local matches = { subject:match("^("..pattern..")$") }
+                if ( #matches == 0 ) then
+                    return nil
                 end
-                return unpack(ordered)
+                local ordered = { tremove(matches, 1) }
+                for i=1,#order do
+                    ordered[order[i]+1] = matches[i]
+                end
+                return unpack(ordered, 1, orderMax+1)
             end
             return ret
         end
+
+
+
+
 
         -- fallback for simple groups
         for k,v in pairs(mTypes) do
@@ -98,7 +110,8 @@ do
             if ( type(subject) ~= "string" ) then
                 return nil
             end
-            return subject:match("^"..pattern.."$")
+            local matches = { subject:match("^("..pattern..")$") }
+            return unpack(matches)
         end
         return ret
     end

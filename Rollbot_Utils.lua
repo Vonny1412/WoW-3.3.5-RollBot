@@ -16,34 +16,6 @@ end
 
 -----------------------------------------------------------------------------------
 
-function ADDON_Utils.CopyTable(src)
-    local dst = {}
-    for k, v in pairs(src) do
-        if ( type(v) == "table" ) then
-            dst[k] = ADDON_Utils.CopyTable(v)
-        else
-            dst[k] = v
-        end
-    end
-    return dst
-end
-
-function ADDON_Utils.ApplyDefaults(dst, defaults)
-    if ( type(dst) ~= "table" ) then
-        dst = {}
-    end
-    for key, value in pairs(defaults) do
-        if ( type(value) == "table" ) then
-            dst[key] = ADDON_Utils.ApplyDefaults(dst[key], value)
-        elseif ( dst[key] == nil ) then
-            dst[key] = value
-        end
-    end
-    return dst
-end
-
------------------------------------------------------------------------------------
-
 function ADDON_Utils.GetColoredItemQualityName(q)
     return select(4, GetItemQualityColor(q)) .."[".. _G["ITEM_QUALITY"..q.."_DESC"] .."]|r"
 end
@@ -86,16 +58,13 @@ function ADDON_Utils.AlwaysAskItem(itemID)
 end
 
 function ADDON_Utils.RequestItemInfo(itemID, cb)
-    local ok,err = V_ItemInfo.RequestItemInfo(itemID, function(itemID, success)
-        if ( success == nil ) then
-            ADDON_Utils.message(L["message_requesting_item_info"], itemID)
-            return
-        end
-        if ( success == false ) then
+    local ok,err = V_ItemInfo.RequestItemInfo(itemID, function(itemName, ...)
+        -- todo: remove localization "message_requesting_item_info"
+        if ( itemName == nil ) then
             ADDON_Utils.message(L["message_requesting_item_info_failed"], itemID)
         end
         if ( cb ) then
-            cb(itemID, success)
+            cb(itemID, itemName, ...)
         end
     end)
     if ( not ok ) then
@@ -136,12 +105,13 @@ function ADDON_Utils.GetRollMessageItemID(msg, keys)
 
         local msgInfo = { ADDON_C.MSG_PATTERNS[k]:GetMatch(msg) }
         if ( #msgInfo > 0 ) then
+            tremove(msgInfo, 1) -- remove whole match
 
             local itemID
             for j=1,#msgInfo do
                 itemID = ADDON_Utils.GetItemLinkInfo(msgInfo[j])
                 if ( itemID ) then
-                    return itemID, k, msgInfo
+                    return itemID, k
                 end
             end
 
