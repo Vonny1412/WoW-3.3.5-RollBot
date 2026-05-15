@@ -58,7 +58,7 @@ end
 function ADDON_History.ItemRollRemoved(itemID, reason)
     local itemName = ADDON_Utils.GetColoredItemName(itemID)
     if ( itemName ) then
-        roll = _ColorizedRollName(ADDON_C.ROLLS.REMOVE)
+        local roll = _ColorizedRollName(ADDON_C.ROLLS.REMOVE)
         reason = _GetReasonString(reason)
         tinsert(temporaryHistory, "#"..itemID.." "..itemName.." "..roll..reason)
         _Truncate()

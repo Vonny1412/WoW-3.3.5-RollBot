@@ -1,10 +1,9 @@
 local ADDON_NAME, ADDON = ...
-
 local ADDON_C = ADDON.Constants
 local ADDON_DB = ADDON.Database
 local ADDON_Utils = ADDON.Utils
+local L = LibStub("AceLocale-3.0"):GetLocale(ADDON_NAME, true)
 local V_Table = LibStub("V_Table-1.0")
-
 -----------------------------------------------------------------------------------
 
 local DATABASE_DEFAULT = {
@@ -31,7 +30,7 @@ local DATABASE_DEFAULT = {
             rollGreed = true,
             rollGreedOnlySellable = true,
             rollDisenchant = true,
-            rollDisenchant_BoE = true,
+            rollDisenchant_BoE = false,
             rollDisenchant_exp0 = false,
             rollDisenchant_exp1 = false,
             rollDisenchant_exp2 = true,

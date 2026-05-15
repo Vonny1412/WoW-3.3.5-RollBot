@@ -1,10 +1,7 @@
 local ADDON_NAME, ADDON = ...
-
 local ADDON_C = ADDON.Constants
-
 local L = LibStub("AceLocale-3.0"):GetLocale(ADDON_NAME, true)
 local V_Pattern = LibStub("V_Pattern-1.0")
-
 -----------------------------------------------------------------------------------
 
 ADDON_C.ROLLBOT_TITLE = "|cFFFFCC00Rollbot|r"

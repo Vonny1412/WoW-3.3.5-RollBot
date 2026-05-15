@@ -11,17 +11,17 @@ local NUM_GROUP_LOOT_FRAMES = 4
 -- "Interface\\DialogFrame\\UI-DialogBox-Gold-Dragon"
 
 local TEX_CYAN = {
-    ["BACKGROUND"] =  "Interface\\AddOns\\RollBot\\Textures\\UI-DialogBox\\UI-DialogBox-Cyan-Background",
-    ["BORDER"] =      "Interface\\AddOns\\RollBot\\Textures\\UI-DialogBox\\UI-DialogBox-Cyan-Border",
-    ["CORNER"] =      "Interface\\AddOns\\RollBot\\Textures\\UI-DialogBox\\UI-DialogBox-Cyan-Corner",
-    ["DRAGON"] =      "Interface\\AddOns\\RollBot\\Textures\\UI-DialogBox\\UI-DialogBox-Cyan-Dragon",
+    ["BACKGROUND"] =  "Interface\\AddOns\\Rollbot\\Textures\\UI-DialogBox\\UI-DialogBox-Cyan-Background",
+    ["BORDER"] =      "Interface\\AddOns\\Rollbot\\Textures\\UI-DialogBox\\UI-DialogBox-Cyan-Border",
+    ["CORNER"] =      "Interface\\AddOns\\Rollbot\\Textures\\UI-DialogBox\\UI-DialogBox-Cyan-Corner",
+    ["DRAGON"] =      "Interface\\AddOns\\Rollbot\\Textures\\UI-DialogBox\\UI-DialogBox-Cyan-Dragon",
 }
 
 local TEX_RED = {
-    ["BACKGROUND"] =  "Interface\\AddOns\\RollBot\\Textures\\UI-DialogBox\\UI-DialogBox-Red-Background",
-    ["BORDER"] =      "Interface\\AddOns\\RollBot\\Textures\\UI-DialogBox\\UI-DialogBox-Red-Border",
-    ["CORNER"] =      "Interface\\AddOns\\RollBot\\Textures\\UI-DialogBox\\UI-DialogBox-Red-Corner",
-    ["DRAGON"] =      "Interface\\AddOns\\RollBot\\Textures\\UI-DialogBox\\UI-DialogBox-Red-Dragon",
+    ["BACKGROUND"] =  "Interface\\AddOns\\Rollbot\\Textures\\UI-DialogBox\\UI-DialogBox-Red-Background",
+    ["BORDER"] =      "Interface\\AddOns\\Rollbot\\Textures\\UI-DialogBox\\UI-DialogBox-Red-Border",
+    ["CORNER"] =      "Interface\\AddOns\\Rollbot\\Textures\\UI-DialogBox\\UI-DialogBox-Red-Corner",
+    ["DRAGON"] =      "Interface\\AddOns\\Rollbot\\Textures\\UI-DialogBox\\UI-DialogBox-Red-Dragon",
 }
 
 local TEX = {

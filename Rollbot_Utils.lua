@@ -2,6 +2,7 @@ local ADDON_NAME, ADDON = ...
 local ADDON_C = ADDON.Constants
 local ADDON_DB = ADDON.Database
 local ADDON_Utils = ADDON.Utils
+local L = LibStub("AceLocale-3.0"):GetLocale(ADDON_NAME, true)
 local V_ItemInfo = LibStub("V_ItemInfo-1.0")
 -----------------------------------------------------------------------------------
 

@@ -55,7 +55,7 @@ StaticPopupDialogs["ROLLBOT_DIALOG_SET_ITEM"] = {
             ADDON_Utils.RequestItemInfo(itemID, function(itemID, itemName, itemLink, itemRarity, ...)
                 if ( itemName ) then
                     if ( itemRarity < ADDON_C.QUALITY_GREEN_UNCOMMON ) then
-                        ADDON_Utils.message(L["itemQualityTooLow"], itemLink)
+                        ADDON_Utils.message(L["message_item_quality_too_low"], itemLink)
                         _CallCB(self.data.callback, "", nil)
                         return
                     end

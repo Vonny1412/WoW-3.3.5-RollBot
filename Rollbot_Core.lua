@@ -246,10 +246,10 @@ local function OnStartLootRoll(rollID)
     local needBoEExpansion  = ADDON_DB.GetConfig("rollNeedBoE_exp"..itemExpansion)
     local disExpansion      = ADDON_DB.GetConfig("rollDisenchant_exp"..itemExpansion)
 
-    local wantNeed          = rollNeed and needExpansion and needQuality
-    local wantGreed         = rollGreed and ( itemSellPrice > 0 or not rollGreedOnlySellable )
+    local wantNeed          = rollNeed       and needExpansion and needQuality
+    local wantGreed         = rollGreed      and ( itemSellPrice > 0 or not rollGreedOnlySellable )
     local wantDisenchant    = rollDisenchant and disExpansion and ( rollDisenchantBoE or not itemIsBoE )
-    local wantBoE           = rollNeedBoE and itemIsBoE and needBoEQuality and needBoEExpansion
+    local wantBoE           = rollNeedBoE    and itemIsBoE and needBoEQuality and needBoEExpansion
 
     -- is in auto list
     local autoRoll = ADDON_DB.GetItemRoll(itemID)
@@ -295,10 +295,10 @@ local function OnStartLootRoll(rollID)
     end
 
     if ( not wantNeed ) then
-        if ( wantDisenchant ) then
+        if ( wantDisenchant and canDisenchant ) then
             return DoRoll(rollID, ADDON_C.ROLLS.DISENCHANT, notWantNeedReason)
         end
-        if ( wantGreed ) then
+        if ( wantGreed and canGreed ) then
             return DoRoll(rollID, ADDON_C.ROLLS.GREED, notWantNeedReason)
         end
         return DoRoll(rollID, ADDON_C.ROLLS.PASS, notWantNeedReason)
@@ -325,10 +325,10 @@ local function OnStartLootRoll(rollID)
     end
 
     if ( not canNeed ) then
-        if ( wantDisenchant ) then
+        if ( wantDisenchant and canDisenchant ) then
             return DoRoll(rollID, ADDON_C.ROLLS.DISENCHANT, reasonNeed)
         end
-        if ( wantGreed ) then
+        if ( wantGreed and canGreed ) then
             return DoRoll(rollID, ADDON_C.ROLLS.GREED, reasonNeed)
         end
         return DoRoll(rollID, ADDON_C.ROLLS.PASS, reasonNeed)
