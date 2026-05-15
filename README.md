@@ -171,12 +171,12 @@ If you enter a situation where Rollbot should not make automatic decisions, you 
 
 Rollbot cannot know which items a player may want for transmogrification, style gear, off-spec collections, roleplay purposes, or for helping friends.
 
-In such situations, it is recommended to either temporarily disable Rollbot or manually assign specific items through the saved roll list.
+In such situations, it is recommended to temporarily disable Rollbot or manually assign roll decisions for specific items.
 
 Rollbot is designed as a quality-of-life addon.  
 It does not bypass protected game mechanics and operates entirely client-side.
 
-Players remain responsible for their loot decisions and how they use the addon.
+Players remain responsible for their own loot decisions and how they use the addon.
 
 ### Protected Items
 
@@ -213,4 +213,4 @@ See [LICENSE](LICENSE) for details.
 
 ---
 
-*Created with ♥️ — and AI assistance*
+*Created with ♥️ — and some AI assistance*

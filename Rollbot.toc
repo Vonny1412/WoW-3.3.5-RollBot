@@ -12,11 +12,14 @@ Libs\CallbackHandler-1.0\CallbackHandler-1.0.lua
 Libs\LibDataBroker-1.1\LibDataBroker-1.1.lua
 Libs\LibDBIcon-1.0\LibDBIcon-1.0.lua
 Libs\AceLocale-3.0\AceLocale-3.0.xml
-Libs\V_Runtime-1.0\V_Runtime-1.0.xml
-Libs\V_Pattern-1.0\V_Pattern-1.0.xml
-Libs\V_ItemInfo-1.0\V_ItemInfo-1.0.xml
-Libs\V_MenuBuilder-1.0\V_MenuBuilder-1.0.xml
-Libs\V_Table-1.0\V_Table-1.0.xml
+#@end-no-lib-strip@
+
+#@no-lib-strip@
+VLibs\V_Runtime-1.0\V_Runtime-1.0.xml
+VLibs\V_Pattern-1.0\V_Pattern-1.0.xml
+VLibs\V_ItemInfo-1.0\V_ItemInfo-1.0.xml
+VLibs\V_MenuBuilder-1.0\V_MenuBuilder-1.0.xml
+VLibs\V_Table-1.0\V_Table-1.0.xml
 #@end-no-lib-strip@
 
 Localization.xml
