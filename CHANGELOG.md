@@ -10,7 +10,7 @@
 - Added separate BoE handling options for recipes, mounts, and pets.
 - BoE items now require a manual roll decision before automatic rolling can occur.
 - Token items now follow the normal "Need (manually)" roll logic and are removed from the saved roll list after being won with Need.
-- Saved BoE item rolls are no longer removed automatically after winning an item.
+- Saved BoE item rolls are no longer removed automatically after winning them.
 
 ## 4.0.3
 

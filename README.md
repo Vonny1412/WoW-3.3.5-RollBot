@@ -39,8 +39,8 @@ Required libraries are included.
 - **Raid warning roll helper**  
   Detects item links in raid warnings and opens a roll frame with item icon, tooltip, and one-click `/rnd` buttons.
 
-- **Legendary and special item protection**  
-  Legendary, special, and learnable items are always shown manually and never auto-saved.
+- **Protected item handling**  
+  Certain special items are always shown to the player instead of being handled automatically.
 
 - **Unknown item protection**  
   Items with unavailable item data are ignored until the client has fully loaded them.
@@ -53,7 +53,7 @@ Rollbot works automatically once enabled.
 
 Whenever an item can be rolled on, Rollbot checks your class, settings, saved roll decisions, and item safety rules before deciding how to roll.
 
-Unknown, important, or protected items are never handled automatically, are always shown to the player, and the selected roll is never saved to the roll list.
+Unknown or protected items are never handled automatically, are always shown to the player, and the selected roll is never saved to the roll list.
 
 While learning mode is enabled, saved items are shown again instead of being rolled automatically, allowing you to review and update your roll decisions without clearing the whole roll list.
 
@@ -69,7 +69,7 @@ The current mode can be changed by left-clicking the minimap icon.
 
 Rollbot automatically handles loot rolls based on your class, settings, saved roll decisions, and item safety rules.
 
-Protected items such as legendary items, raid equipment, unknown items, and special learnable items are always shown manually and are never saved automatically.
+Protected items and unknown items are always shown to the player instead of being handled automatically.
 
 If a saved roll type is unavailable, Rollbot safely falls back to other allowed roll types when possible.
 
@@ -87,7 +87,7 @@ Once an item has been reviewed during the current learning session, Rollbot resu
 
 ### Automatic Cleanup
 
-When you win equippable or learnable items such as recipes, mounts, or pets, Rollbot automatically removes them from the saved roll list.
+When you win token, equippable or learnable Need-items, Rollbot automatically removes them from the saved roll list.
 
 ---
 
@@ -128,13 +128,16 @@ Available settings include:
   Defines which items may be needed manually and shown to the player.
 
 - **Need (BoE)**  
-  Automatically rolls Need on matching bind-on-equip items.
+  Allows matching bind-on-equip items to be learned for automatic Need rolls.
 
 - **Greed**  
-  Uses Greed as an automatic fallback roll.
+  Use Greed as an automatic fallback roll.
 
 - **Disenchant**  
-  Uses Disenchant as an automatic fallback roll before Greed when available.
+  Use Disenchant as an automatic fallback roll before Greed when available.
+
+- **Pass**  
+  Use Pass as an automatic fallback roll when no other automatic roll applies.
 
 - **Show /rnd frame**  
   Enables the raid warning roll helper and allows custom `/rnd` values.
@@ -184,11 +187,10 @@ The following items are treated as protected items and are always shown manually
 - `50379` — Battered Hilt (Alliance)
 - `50380` — Battered Hilt (Horde)
 - `49294` — Ashen Sack of Gems
+- `34846` — Black Sack of Gems
 - `43347` — Satchel of Spoils
 - `43297` — Damaged Necklace
 - `45912` — Book of Glyph Mastery
-- `22559` — Formula: Enchant Weapon - Mongoose
-- `33307` — Formula: Enchant Weapon - Executioner
 - `49908` — Primordial Saronite
 - `45038` — Fragment of Val'anyr
 
