@@ -39,9 +39,6 @@ Required libraries are included.
 - **Raid warning roll helper**  
   Detects item links in raid warnings and opens a roll frame with item icon, tooltip, and one-click `/rnd` buttons.
 
-- **Raid loot protection**  
-  Prevents automatic Need or Disenchant rolls on important raid equipment.
-
 - **Legendary and special item protection**  
   Legendary, special, and learnable items are always shown manually and never auto-saved.
 

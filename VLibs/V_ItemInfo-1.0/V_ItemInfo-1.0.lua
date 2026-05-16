@@ -89,8 +89,9 @@ end
 V_ItemInfo.IsLearnableItem = function(item)
     local t1, t2 = select(6, GetItemInfo(item))
     local isRecipe = t1 == ITEM_TYPE_RECIPE
-    local isMountOrPet = t1 == ITEM_TYPE_MISC and ( t2 == ITEM_SUBTYPE_MOUNT or t2 == ITEM_SUBTYPE_PET )
-    return isRecipe or isMountOrPet
+    local isMount = t1 == ITEM_TYPE_MISC and t2 == ITEM_SUBTYPE_MOUNT
+    local isPet = t1 == ITEM_TYPE_MISC and t2 == ITEM_SUBTYPE_PET
+    return isRecipe or isMount or isPet, isRecipe, isMount, isPet
 end
 
 V_ItemInfo.IsEquipableItem = function(item, includeAmmo)

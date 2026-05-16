@@ -103,9 +103,7 @@ ADDON_C.ALWAYS_ASK_ITEMS = {
 
     [52019] = true, -- Precious' Ribbon (ICC)
 
-    [50274] = true, -- Shadowfrost Shard (ICC)
     [49908] = true, -- Primordial Saronite (ICC)
-    [45038] = true, -- Fragment of Val'anyr (Ulduar)
 
     [50379] = true, -- Battered Hilt (WotLK Alliance)
     [50380] = true, -- Battered Hilt (WotLK Horde)
@@ -116,6 +114,44 @@ ADDON_C.ALWAYS_ASK_ITEMS = {
 
     [43297] = true, -- Damaged Necklace (WotLK Random Drop)
     [45912] = true, -- Book of Glyph Mastery (WotLK Random Drop)
+
+    -- Legendary
+    [50274] = true, -- Shadowfrost Shard (ICC)
+    [45038] = true, -- Fragment of Val'anyr (Ulduar)
+
+--[[
+
+    -- Mounts
+    [32458] = true, -- Ashes of Al'ar
+    [50818] = true, -- Invincible's Reins
+    [45693] = true, -- Mimiron's Head
+    [43952] = true, -- Reins of the Azure Drake
+    [43953] = true, -- Reins of the Blue Drake
+    [43954] = true, -- Reins of the Twilight Drake
+    [43986] = true, -- Reins of the Black Drake
+    [44151] = true, -- Reins of the Blue Proto-Drake
+    [32768] = true, -- Reins of the Raven Lord
+    [44168] = true, -- Reins of the Time-Lost Proto-Drake
+    [35513] = true, -- Swift White Hawkstrider
+    [13335] = true, -- Deathcharger's Reins
+    [19872] = true, -- Swift Razzashi Raptor
+    [19902] = true, -- Swift Zulian Tiger
+    [33809] = true, -- Amani War Bear
+    [37012] = true, -- The Horseman's Reins
+
+    -- Pets
+    [8491]  = true, -- Cat Carrier (Black Tabby)
+    [8492]  = true, -- Parrot Cage (Green Wing Macaw)
+    [8494]  = true, -- Parrot Cage (Hyacinth Macaw)
+    [8498]  = true, -- Tiny Emerald Whelpling
+    [8499]  = true, -- Tiny Crimson Whelpling
+    [48114] = true, -- Deviate Hatchling
+    [29960] = true, -- Captured Firefly
+    [11474] = true, -- Sprite Darter Egg
+    [35504] = true, -- Phoenix Hatchling
+    [34535] = true, -- Azure Whelpling
+
+]]--
 
 }
 
@@ -319,11 +355,5 @@ ADDON_C.TOKEN_ITEMS = {
     [22372] = true, -- Desecrated Sandals
 
 }
-
-
-
-
-
-
 
 -----------------------------------------------------------------------------------

@@ -262,6 +262,8 @@ menu:Register({"settings"}, function(self)
     local rollNeedBoE = not not ADDON_DB.GetConfig("rollNeedBoE")
     local rollGreed = not not ADDON_DB.GetConfig("rollGreed")
     local rollDisenchant = not not ADDON_DB.GetConfig("rollDisenchant")
+    local rollPass = not not ADDON_DB.GetConfig("rollPass")
+
     local showRndFrame = not not ADDON_DB.GetConfig("showRndFrame")
     local filterMessages = not not ADDON_DB.GetConfig("filterMessages")
 
@@ -292,6 +294,13 @@ menu:Register({"settings"}, function(self)
         checked = rollDisenchant,
         func = _SetConfigChecked,
         arg = { cfgkey = "rollDisenchant", reopen = { "settings", "rollDisenchant" } },
+    })
+    self:AddButton(L["menu_roll_pass"], {
+        path = { "settings", "rollPass" },
+        arrow = false,
+        checked = rollPass,
+        func = _SetConfigChecked,
+        arg = { cfgkey = "rollPass", reopen = { "settings", "rollPass" } },
     })
     self:AddSpacer()
     self:AddButton(L["menu_show_rnd_frame"], {
@@ -331,6 +340,12 @@ menu:Register({"settings","rollNeed"}, function(self)
             arg = { cfgkey = cfgkey, reopen = { "settings", "rollNeed" } },
         })
     end
+    self:AddSpacer("")
+    self:AddButton(L["menu_roll_need_check_requirements"], {
+        checked = not not ADDON_DB.GetConfig("rollNeed_checkRequirements"),
+        func = _SetConfigChecked,
+        arg = { cfgkey = "rollNeed_checkRequirements", reopen = { "settings", "rollNeed" } },
+    })
 end)
 
 menu:Register({"settings","rollNeedBoE"}, function(self)
@@ -354,10 +369,21 @@ menu:Register({"settings","rollNeedBoE"}, function(self)
             arg = { cfgkey = cfgkey, reopen = { "settings", "rollNeedBoE" } },
         })
     end
+    self:AddSpacer("")
+    self:AddSpacer("|cFFFFCC00"..L["menu_roll_need_boe_including"].."|r")
+    for i, incl in ipairs( { "recipes", "mounts", "pets" } ) do
+        local text = L["menu_roll_need_boe_including_"..incl]
+        local cfgkey = "rollNeedBoE_"..incl
+        self:AddButton(text, {
+            checked = not not ADDON_DB.GetConfig(cfgkey),
+            func = _SetConfigChecked,
+            arg = { cfgkey = cfgkey, reopen = { "settings", "rollNeedBoE" } },
+        })
+    end
 end)
 
 menu:Register({"settings","rollGreed"}, function(self)
-    local cfgkey = "rollGreedOnlySellable"
+    local cfgkey = "rollGreed_onlySellable"
     self:AddButton(L["menu_roll_greed_only_sellable"], {
         checked = not not ADDON_DB.GetConfig(cfgkey),
         func = _SetConfigChecked,
@@ -366,12 +392,6 @@ menu:Register({"settings","rollGreed"}, function(self)
 end)
 
 menu:Register({"settings","rollDisenchant"}, function(self)
-    self:AddButton(L["menu_roll_de_boe"], {
-        checked = not not ADDON_DB.GetConfig("rollDisenchant_BoE"),
-        func = _SetConfigChecked,
-        arg = { cfgkey = "rollDisenchant_BoE", reopen = { "settings", "rollDisenchant" } },
-    })
-    self:AddSpacer("")
     self:AddSpacer("|cFFFFCC00"..L["menu_expansion"].."|r")
     for exp=0,ADDON_C.EXPANSIONS,1 do
         local cfgkey = "rollDisenchant_exp"..exp
@@ -381,6 +401,12 @@ menu:Register({"settings","rollDisenchant"}, function(self)
             arg = { cfgkey = cfgkey, reopen = { "settings", "rollDisenchant" } },
         })
     end
+    self:AddSpacer("")
+    self:AddButton(L["menu_roll_de_boe"], {
+        checked = not not ADDON_DB.GetConfig("rollDisenchant_BoE"),
+        func = _SetConfigChecked,
+        arg = { cfgkey = "rollDisenchant_BoE", reopen = { "settings", "rollDisenchant" } },
+    })
 end)
 
 menu:Register({"settings","showRndFrame"}, function(self)
@@ -448,12 +474,9 @@ menu:Register({"behavior"}, function(self)
     self:AddButton(L["behavior_ignore_unknown_items"], { checked = true, disabled = true })
     self:AddButton(L["behavior_special_items_manual"], { checked = true, disabled = true })
     self:AddButton(L["behavior_legendary_items_manual"], { checked = true, disabled = true })
-    self:AddButton(L["behavior_learnable_items_manual"], { checked = true, disabled = true })
     self:AddButton(L["behavior_token_items_manual"], { checked = true, disabled = true })
-    self:AddButton(L["behavior_epic_equip_in_raid_manual"], { checked = true, disabled = true })
     self:AddButton(L["behavior_roll_fallback"], { checked = true, disabled = true })
     self:AddButton(L["behavior_remove_won_relevant_items"], { checked = true, disabled = true })
-    self:AddButton(L["behavior_learnable_boe"], { checked = true, disabled = true })
 end)
 
 -----------------------------------------------------------------------------------

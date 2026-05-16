@@ -35,7 +35,8 @@ function ADDON_Utils.GetItemExpansion(itemID)
 end
 
 function ADDON_Utils.IsLearnableItem(itemID)
-    return V_ItemInfo.IsLearnableItem(itemID)
+    local isLearnable, isRecipe, isMount, isPet = V_ItemInfo.IsLearnableItem(itemID)
+    return isLearnable, isRecipe, isMount, isPet
 end
 
 function ADDON_Utils.GetItemLinkInfo(itemLink)

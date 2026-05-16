@@ -9,11 +9,13 @@ local V_Table = LibStub("V_Table-1.0")
 local DATABASE_DEFAULT = {
     autoRolls = {},
     lastItems = {},
+    boeCache = {},
     settings = {
-        dbv = 4,
+        dbv = 5,
         state = 1, -- STATE_ACTIVE
         cfg = {
             rollNeed = true,
+            rollNeed_checkRequirements = true,
             rollNeed_exp0 = false,
             rollNeed_exp1 = false,
             rollNeed_exp2 = true,
@@ -27,13 +29,17 @@ local DATABASE_DEFAULT = {
             rollNeedBoE_qual2 = false,
             rollNeedBoE_qual3 = true,
             rollNeedBoE_qual4 = true,
+            rollNeedBoE_recipes = true,
+            rollNeedBoE_mounts = true,
+            rollNeedBoE_pets = true,
             rollGreed = true,
-            rollGreedOnlySellable = true,
+            rollGreed_onlySellable = true,
             rollDisenchant = true,
             rollDisenchant_BoE = false,
             rollDisenchant_exp0 = false,
             rollDisenchant_exp1 = false,
             rollDisenchant_exp2 = true,
+            rollPass = true,
             showRndFrame = true,
             filterMessages = true,
             manualSetItemWarned = false,
@@ -80,8 +86,12 @@ function ADDON_DB.Initialize()
     else
         RollbotDB = V_Table.ApplyDefaults(RollbotDB, DATABASE_DEFAULT)
     end
-    --if ( ADDON_DB.UpdateToVersion(12345) ) then
-    --end
+    if ( ADDON_DB.UpdateToVersion(5) ) then
+        if ( RollbotDB.settings.cfg.rollGreedOnlySellable ~= nil ) then
+            RollbotDB.settings.cfg.rollGreed_onlySellable = RollbotDB.settings.cfg.rollGreedOnlySellable
+            RollbotDB.settings.cfg.rollGreedOnlySellable = nil
+        end
+    end
 end
 
 -----------------------------------------------------------------------------------
@@ -105,6 +115,16 @@ function ADDON_DB.UpdateToVersion(toVersion)
         return true
     end
     return false
+end
+
+-----------------------------------------------------------------------------------
+
+function ADDON_DB.SetCachedBoE(itemID)
+    RollbotDB.boeCache[itemID] = true
+end
+
+function ADDON_DB.IsCachedBoE(itemID)
+    return RollbotDB.boeCache[itemID]
 end
 
 -----------------------------------------------------------------------------------
