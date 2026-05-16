@@ -4,15 +4,13 @@
 ## 4.0.4
 
 - Epic equippable raid items are no longer treated as a special protected case.
-- Added an option to disable tooltip requirement checks for automatic Need rolls.
+- Added an option to disable requirement checks for items handled by "Need (manually)".
 - Roll decisions for learnable items such as recipes, mounts, and pets are now remembered and reused automatically.
-- Rare mounts and pets are now handled as protected items instead of being saved as automatic roll decisions.
 - Added an option to enable/disable automatic Pass rolls.
-- Added an option to include learnable items in BoE handling.
-- BoE items now require a manual roll decision before automatic rolling can occur.
-- Token items now require a manual roll decision before automatic rolling can occur.
-- Saved BoE item rolls are no longer removed automatically after winning an item.
 - Added separate BoE handling options for recipes, mounts, and pets.
+- BoE items now require a manual roll decision before automatic rolling can occur.
+- Token items now follow the normal "Need (manually)" roll logic and are removed from the saved roll list after being won with Need.
+- Saved BoE item rolls are no longer removed automatically after winning an item.
 
 ## 4.0.3
 
